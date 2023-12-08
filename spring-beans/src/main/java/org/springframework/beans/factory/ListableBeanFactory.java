@@ -30,7 +30,7 @@ import org.springframework.lang.Nullable;
  * that can enumerate all their bean instances, rather than attempting bean lookup
  * by name one by one as requested by clients. BeanFactory implementations that
  * preload all their bean definitions (such as XML-based factories) may implement
- * this interface.
+ * this interface.  这可以枚举他们所有的 Bean 实例，而不是根据客户端的要求逐个尝试按名称逐个查找 Bean。预加载所有 Bean 定义的 BeanFactory 实现（例如基于 XML 的工厂）可以实现此接口。
  *
  * <p>If this is a {@link HierarchicalBeanFactory}, the return values will <i>not</i>
  * take any BeanFactory hierarchy into account, but will relate only to the beans

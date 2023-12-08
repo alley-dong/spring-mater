@@ -34,7 +34,8 @@ import org.springframework.util.StringValueResolver;
  * 提供配置Factory的各种方法
  *
  * Configuration interface to be implemented by most bean factories. Provides
- * facilities to configure a bean factory, in addition to the bean factory
+ * facilities to configure a bean factory, in addition to the bean factory  大多数 Bean 工厂要实现的配置接口。除了 Bean 工厂之外，还提供用于配置 Bean 工厂的工具
+ *
  * client methods in the {@link org.springframework.beans.factory.BeanFactory}
  * interface.
  *
