@@ -197,6 +197,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	private final AtomicBoolean closed = new AtomicBoolean();
 
 	/** Synchronization monitor for the "refresh" and "destroy". */
+	/**
+	 * 刷新和销毁不能被中断
+	 */
 	private final Object startupShutdownMonitor = new Object();
 
 	/** Reference to the JVM shutdown hook, if registered. */
@@ -238,7 +241,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * Create a new AbstractApplicationContext with no parent.
 	 */
 	public AbstractApplicationContext() {
-		// 创建资源模式处理器
+		// 创建资源模式处理器,解析当前系统运行所需要的资源(配置文件，xml文件)
 		this.resourcePatternResolver = getResourcePatternResolver();
 	}
 
@@ -247,6 +250,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * @param parent the parent context
 	 */
 	public AbstractApplicationContext(@Nullable ApplicationContext parent) {
+		// 调用自己的构造方法
 		this();
 		setParent(parent);
 	}
@@ -339,6 +343,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * a custom {@link ConfigurableEnvironment} implementation.
 	 */
 	protected ConfigurableEnvironment createEnvironment() {
+		/**
+		 * 1.父类的非私有方法可以被子类调用
+		 * 2.构造方法执行前会先初始化类中的成员对象
+		 *
+		 * StandardEnvironment中是默认构造器，如果想debug去它的父类中的构造方法加断点。
+		 *
+		 * 父类AbstractEnvironment的customizePropertySources方法的最终是在子类中生效，子类重写父类方法，因为父类在构造的时候是从子类进去的 父类本身实现是空的 所以会调到子类中。
+		 */
 		return new StandardEnvironment();
 	}
 
@@ -553,6 +565,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	@Override
 	public void refresh() throws BeansException, IllegalStateException {
+		// 同步监视器 刷新和销毁不能被中断
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
 			/**
@@ -787,7 +800,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 *
 	 * Instantiate and invoke all registered BeanFactoryPostProcessor beans,
 	 * respecting explicit order if given.
-	 * <p>Must be called before singleton instantiation.
+	 * <p>Must be called before singleton instantiation. 一定要在实例化之前进行调用
 	 */
 	protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
 		// 获取到当前应用程序上下文的beanFactoryPostProcessors变量的值，并且实例化调用执行所有已经注册的beanFactoryPostProcessor

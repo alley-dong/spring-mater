@@ -201,6 +201,7 @@ public abstract class AbstractEnvironment implements ConfigurableEnvironment {
 	 * @see org.springframework.context.ApplicationContextInitializer
 	 */
 	protected void customizePropertySources(MutablePropertySources propertySources) {
+		// 子类重写
 	}
 
 	/**
