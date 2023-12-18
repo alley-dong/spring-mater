@@ -174,6 +174,9 @@ public class PluggableSchemaResolver implements EntityResolver {
 	}
 
 
+	/**
+	 * 在Idea进行debug的时候toString方法会被执行
+	 */
 	@Override
 	public String toString() {
 		return "EntityResolver using schema mappings " + getSchemaMappings();

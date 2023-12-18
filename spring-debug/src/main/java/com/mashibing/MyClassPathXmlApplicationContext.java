@@ -18,14 +18,18 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
     @Override
     protected void initPropertySources() {
         System.out.println("扩展initPropertySource");
-        getEnvironment().setRequiredProperties("username");
+//        getEnvironment().setRequiredProperties("username");
     }
 
     @Override
     protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
-//        super.setAllowBeanDefinitionOverriding(false);
-//        super.setAllowCircularReferences(false);
-        super.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
+        /**
+         * DefaultListableBeanFactory和AbstractRefreshableApplicationContext是组合的关系。
+         * 当对AllowBeanDefinitionOverriding进行修改的时候 要先修改父类的，通过父类修改DefaultListableBeanFactory。
+         * super.setAllowBeanDefinitionOverriding(false);
+         * super.setAllowCircularReferences(false);
+         */
+//        super.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
         super.customizeBeanFactory(beanFactory);
     }
 

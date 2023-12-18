@@ -576,7 +576,6 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			 * 4、获取Environment对象，并加载当前系统的属性值到Environment对象中
 			 * 5、准备监听器和事件的集合对象，默认为空的集合
 			 */
-
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
@@ -709,6 +708,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected void initPropertySources() {
 		// For subclasses: do nothing by default.
+		// 由子类来进行扩展赋值
 	}
 
 	/**

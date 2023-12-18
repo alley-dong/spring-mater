@@ -127,6 +127,7 @@ public abstract class AbstractRefreshableConfigApplicationContext extends Abstra
 	 */
 	protected String resolvePath(String path) {
 		// 子类调用父类方法
+		// getEnvironment：获取系统变量 ， resolveRequiredPlaceholders：根据${xxx}重新生成xml文件路径
 		return getEnvironment().resolveRequiredPlaceholders(path);
 	}
 
