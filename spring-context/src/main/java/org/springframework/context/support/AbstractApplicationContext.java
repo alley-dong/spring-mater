@@ -1505,6 +1505,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 	@Override
 	public Resource[] getResources(String locationPattern) throws IOException {
+		// resourcePatternResolver在父类初始化的时候进行创建
 		return this.resourcePatternResolver.getResources(locationPattern);
 	}
 

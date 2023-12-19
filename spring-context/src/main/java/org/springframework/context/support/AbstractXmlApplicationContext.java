@@ -90,6 +90,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 		// 给reader对象设置环境对象
 		beanDefinitionReader.setEnvironment(this.getEnvironment());
 		beanDefinitionReader.setResourceLoader(this);
+		// 定义xml书写规范（xsd,dtd）
 		// ResourceEntityResolver 读取本地的xsd、dtd等等文件的解析工作。
 		// 可以看一下xml文件顶部的http或者https地址，如果没有网络的情况，可以去本地读取（ META-INF/spring.schemas ）
 		beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
@@ -128,6 +129,7 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	 */
 	protected void loadBeanDefinitions(XmlBeanDefinitionReader reader) throws BeansException, IOException {
 		// 以Resource的方式获得配置文件的资源位置
+		// 一般比较少用  用的话必须调用对应的构造方法
 		Resource[] configResources = getConfigResources();
 		if (configResources != null) {
 			reader.loadBeanDefinitions(configResources);
