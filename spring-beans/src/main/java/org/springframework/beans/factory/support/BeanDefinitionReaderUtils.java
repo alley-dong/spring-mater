@@ -56,11 +56,12 @@ public abstract class BeanDefinitionReaderUtils {
 	 */
 	public static AbstractBeanDefinition createBeanDefinition(
 			@Nullable String parentName, @Nullable String className, @Nullable ClassLoader classLoader) throws ClassNotFoundException {
-
+		// 创建BeanDefinition
 		GenericBeanDefinition bd = new GenericBeanDefinition();
 		bd.setParentName(parentName);
 		if (className != null) {
 			if (classLoader != null) {
+				// 通过反射实例化
 				bd.setBeanClass(ClassUtils.forName(className, classLoader));
 			}
 			else {
@@ -175,6 +176,7 @@ public abstract class BeanDefinitionReaderUtils {
 		// Register bean definition under primary name.
 		// 使用beanName做唯一标识注册
 		String beanName = definitionHolder.getBeanName();
+		// 分别向beanDefinitionNames 和 beanDefinitionMaps进行赋值
 		registry.registerBeanDefinition(beanName, definitionHolder.getBeanDefinition());
 
 		// Register aliases for bean name, if any.
@@ -182,6 +184,7 @@ public abstract class BeanDefinitionReaderUtils {
 		String[] aliases = definitionHolder.getAliases();
 		if (aliases != null) {
 			for (String alias : aliases) {
+				// 将别名放入集合对象
 				registry.registerAlias(beanName, alias);
 			}
 		}

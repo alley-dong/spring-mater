@@ -438,7 +438,8 @@ public class BeanDefinitionParserDelegate {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
 
-		// 对bean元素的详细解析
+		// 对bean元素的详细解析(并不是递归 是重写)
+		// 当前beanDefinition是一个完整的解析完xml文件的BeanDefinition
 		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
 		if (beanDefinition != null) {
 			if (!StringUtils.hasText(beanName)) {
@@ -520,6 +521,7 @@ public class BeanDefinitionParserDelegate {
 		}
 
 		try {
+			// 有了className就已经可以实例化（反射）
 			// 创建装在bean信息的AbstractBeanDefinition对象，实际的实现是GenericBeanDefinition
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
 
@@ -528,7 +530,7 @@ public class BeanDefinitionParserDelegate {
 			// 设置description信息
 			bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));
 
-			// 解析元数据
+			// 解析元数据 <mate key="" value=""></mate>
 			parseMetaElements(ele, bd);
 			// 解析lookup-method属性
 			parseLookupOverrideSubElements(ele, bd.getMethodOverrides());
