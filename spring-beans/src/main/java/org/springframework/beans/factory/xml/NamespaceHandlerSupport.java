@@ -72,7 +72,8 @@ public abstract class NamespaceHandlerSupport implements NamespaceHandler {
 	public BeanDefinition parse(Element element, ParserContext parserContext) {
 		// 获取元素的解析器
 		BeanDefinitionParser parser = findParserForElement(element, parserContext);
-		return (parser != null ? parser.parse(element, parserContext) : null);
+		// parser：子类对象指向父类引用（AbstractPropertyLoadingBeanDefinitionParser ——> AbstractBeanDefinition） 调用父类parser方法  在父类方法中由子类实现doParser方法。
+		return (parser != null ? parser. parse(element, parserContext) : null);
 	}
 
 	/**
