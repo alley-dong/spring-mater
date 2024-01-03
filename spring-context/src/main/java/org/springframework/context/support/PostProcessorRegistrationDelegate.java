@@ -229,6 +229,7 @@ final class PostProcessorRegistrationDelegate {
         // 对实现了PriorityOrdered接口的BeanFactoryPostProcessor进行排序
         sortPostProcessors(priorityOrderedPostProcessors, beanFactory);
         // 遍历实现了PriorityOrdered接口的BeanFactoryPostProcessor，执行postProcessBeanFactory方法
+        // 自定义属性编辑器 调用
         invokeBeanFactoryPostProcessors(priorityOrderedPostProcessors, beanFactory);
 
         // Next, invoke the BeanFactoryPostProcessors that implement Ordered.
