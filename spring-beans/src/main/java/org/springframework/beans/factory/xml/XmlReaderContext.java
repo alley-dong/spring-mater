@@ -81,6 +81,8 @@ public class XmlReaderContext extends ReaderContext {
 	 * @see XmlBeanDefinitionReader#XmlBeanDefinitionReader(BeanDefinitionRegistry)
 	 */
 	public final BeanDefinitionRegistry getRegistry() {
+		// DefaultBeanDefinitionDocumentReader 依赖 XmlReaderContext。 XmlReaderContext 依赖 XmlBeanDefinitionReader
+		// XmlBeanDefinitionReader是AbstractBeanDefinitionReader的子类。
 		return this.reader.getRegistry();
 	}
 

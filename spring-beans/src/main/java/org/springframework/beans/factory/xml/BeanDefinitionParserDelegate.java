@@ -1459,11 +1459,14 @@ public class BeanDefinitionParserDelegate {
 	@Nullable
 	public BeanDefinition parseCustomElement(Element ele, @Nullable BeanDefinition containingBd) {
 		// 获取对应的命名空间
+		// applicationContext.xml  ->  http://www.springframework.org/schema/context
+		// 根据META-INF路径下的spring.handlers 加载ContextNamespaceHandler http\://www.springframework.org/schema/context=org.springframework.context.config.ContextNamespaceHandler
+		// ContextNamespaceHandler调用init 将配置文件信息存到map，根据key去获取对应的处理器。
 		String namespaceUri = getNamespaceURI(ele);
 		if (namespaceUri == null) {
 			return null;
 		}
-		// 根据命名空间找到对应的NamespaceHandlerspring
+		// 根据命名空间找到对应的NamespaceHandler -> (http://www.springframework.org/schema/context -> ContextNamespaceHandler )
 		NamespaceHandler handler = this.readerContext.getNamespaceHandlerResolver().resolve(namespaceUri);
 		if (handler == null) {
 			error("Unable to locate Spring NamespaceHandler for XML schema namespace [" + namespaceUri + "]", ele);

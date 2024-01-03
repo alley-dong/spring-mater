@@ -118,6 +118,7 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 		// 获取所有已经配置好的handler映射
 		Map<String, Object> handlerMappings = getHandlerMappings();
 		// 根据命名空间找到对应的信息
+		// http\://www.springframework.org/schema/context=org.springframework.context.config.ContextNamespaceHandler
 		Object handlerOrClassName = handlerMappings.get(namespaceUri);
 		if (handlerOrClassName == null) {
 			return null;
@@ -140,7 +141,7 @@ public class DefaultNamespaceHandlerResolver implements NamespaceHandlerResolver
 				NamespaceHandler namespaceHandler = (NamespaceHandler) BeanUtils.instantiateClass(handlerClass);
 				// 调用自定义的namespaceHandler的初始化方法
 				namespaceHandler.init();
-				// 讲结果记录在缓存中
+				// 将结果(ContextNamespaceHandler实例化)记录在缓存中
 				handlerMappings.put(namespaceUri, namespaceHandler);
 				return namespaceHandler;
 			}
