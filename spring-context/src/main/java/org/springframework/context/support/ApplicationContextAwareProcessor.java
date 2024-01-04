@@ -87,6 +87,7 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 
 	/**
 	 * 接口beanPostProcessor规定的方法，会在bean创建时，实例化后，初始化前，对bean对象应用
+	 * 在initBean中的applyBeanPostProcessorsBeforeInitialization中回调
 	 * @param bean the new bean instance
 	 * @param beanName the name of the bean
 	 * @return
@@ -122,7 +123,7 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 	}
 
 	/**
-	 * 如果某个bean实现了某个aware接口，给指定的bean设置相应的属性值
+	 * 如果某个bean实现了某个aware接口，给指定的bean设置相应的属性值。而不是在invokeAwareMethods设置的
 	 *
 	 * @param bean
 	 */
