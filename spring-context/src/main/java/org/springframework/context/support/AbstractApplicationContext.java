@@ -735,6 +735,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		beanFactory.setBeanClassLoader(getClassLoader());
 		// 设置beanfactory的表达式语言处理器
 		beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
+		// 自定义属性编辑器扩展场景：在一个文本框中（辽宁省大连市高新区） 我要将这个信息注册到带有省市区的bean中。
 		// 为beanFactory注册一个默认的propertyEditor，这个主要是对bean的属性等设置管理的一个工具类
 		// 注意：当前只是注册，在后续填充bean属性的时候会使用
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));

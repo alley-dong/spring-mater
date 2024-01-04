@@ -146,7 +146,7 @@ public class CustomEditorConfigurer implements BeanFactoryPostProcessor, Ordered
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		// 如果属性编辑注册器不等于空
 		if (this.propertyEditorRegistrars != null) {
-			// 遍历属性编辑注册器的集合
+			// 遍历属性编辑注册器的集合（注册器是从BeanDefinition中获取）
 			for (PropertyEditorRegistrar propertyEditorRegistrar : this.propertyEditorRegistrars) {
 				// 将属性编辑注册器添加到beanFactory
 				beanFactory.addPropertyEditorRegistrar(propertyEditorRegistrar);

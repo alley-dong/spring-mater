@@ -78,6 +78,7 @@ public class ResourceEditorRegistrar implements PropertyEditorRegistrar {
 	 * see org.springframework.context.ApplicationContext
 	 */
 	public ResourceEditorRegistrar(ResourceLoader resourceLoader, PropertyResolver propertyResolver) {
+		// 在这里不要以为代码就结束，看父类的实现
 		this.resourceLoader = resourceLoader;
 		this.propertyResolver = propertyResolver;
 	}
@@ -103,6 +104,8 @@ public class ResourceEditorRegistrar implements PropertyEditorRegistrar {
 	 */
 	@Override
 	public void registerCustomEditors(PropertyEditorRegistry registry) {
+		// 当前代码在bean初始化BeanWrapper的时候进行调用
+		// 当我们自己要进行扩展的时候 要看他们自己是怎么写的（看ResourceEditor的父类-PropertyEditorSupport类-重写setAsText方法）
 		ResourceEditor baseEditor = new ResourceEditor(this.resourceLoader, this.propertyResolver);
 		doRegisterEditor(registry, Resource.class, baseEditor);
 		doRegisterEditor(registry, ContextResource.class, baseEditor);

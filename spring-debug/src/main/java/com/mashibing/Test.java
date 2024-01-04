@@ -2,6 +2,7 @@ package com.mashibing;
 
 import com.mashibing.cycle.A;
 import com.mashibing.cycle.B;
+import com.mashibing.selfEditorTest.Customer;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -29,9 +30,9 @@ public class Test {
 ////        User user = (User) ac.getBean("msb");
 ////        System.out.println(user.getUsername());
 //
-////        MyClassPathXmlApplicationContext ac = new MyClassPathXmlApplicationContext("selfEditor.xml");
-////        Customer bean = ac.getBean(Customer.class);
-////        System.out.println(bean);
+        MyClassPathXmlApplicationContext ac = new MyClassPathXmlApplicationContext("selfEditor.xml");
+        Customer bean = ac.getBean(Customer.class);
+        System.out.println(bean);
 ////        ConversionService bean = ac.getBean(ConversionService.class);
 ////        Student convert = bean.convert("1_zhangsan", Student.class);
 ////        System.out.println(convert);
@@ -58,9 +59,9 @@ public class Test {
 //        A a = new A();
 //        B b = new B();
 
-        ClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("applicationContext.xml");
-        Person bean = context.getBean(Person.class);
-        System.out.println(bean);
+//        ClassPathXmlApplicationContext context = new MyClassPathXmlApplicationContext("applicationContext.xml");
+//        Person bean = context.getBean(Person.class);
+//        System.out.println(bean);
         //想通过student获取其他bean对象怎么办？
 
 
