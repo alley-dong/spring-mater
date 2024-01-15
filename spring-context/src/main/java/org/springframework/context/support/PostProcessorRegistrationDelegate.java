@@ -60,7 +60,7 @@ final class PostProcessorRegistrationDelegate {
 
         // Invoke BeanDefinitionRegistryPostProcessors first, if any.
         // 无论是什么情况，优先执行BeanDefinitionRegistryPostProcessors
-        // 将已经执行过的BFPP存储在processedBeans中，防止重复执行
+        // 将已经处理过的BFPP存储在processedBeans中，防止重复执行
         Set<String> processedBeans = new HashSet<>();
 
         // 判断beanfactory是否是BeanDefinitionRegistry类型，此处是DefaultListableBeanFactory,实现了BeanDefinitionRegistry接口，所以为true
@@ -69,6 +69,8 @@ final class PostProcessorRegistrationDelegate {
             BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
             // 此处希望大家做一个区分，两个接口是不同的，BeanDefinitionRegistryPostProcessor是BeanFactoryPostProcessor的子集
             // BeanFactoryPostProcessor主要针对的操作对象是BeanFactory，而BeanDefinitionRegistryPostProcessor主要针对的操作对象是BeanDefinition
+
+            // 外部定义好的 传进来的BeanFactoryPostProcessor
             // 存放BeanFactoryPostProcessor的集合
             List<BeanFactoryPostProcessor> regularPostProcessors = new ArrayList<>();
             // 存放BeanDefinitionRegistryPostProcessor的集合
@@ -101,6 +103,7 @@ final class PostProcessorRegistrationDelegate {
             // First, invoke the BeanDefinitionRegistryPostProcessors that implement PriorityOrdered.
             // 调用所有实现PriorityOrdered接口的BeanDefinitionRegistryPostProcessor实现类
             // 找到所有实现BeanDefinitionRegistryPostProcessor接口bean的beanName
+            // org.springframework.context.annotation.internalConfigurationAnnotationProcessor 是在解析component-scan标签的时候进行赋值
             String[] postProcessorNames =
                     beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
             // 遍历处理所有符合规则的postProcessorNames

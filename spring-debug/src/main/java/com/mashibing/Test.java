@@ -30,9 +30,9 @@ public class Test {
 ////        User user = (User) ac.getBean("msb");
 ////        System.out.println(user.getUsername());
 //
-        MyClassPathXmlApplicationContext ac = new MyClassPathXmlApplicationContext("selfEditor.xml");
-        Customer bean = ac.getBean(Customer.class);
-        System.out.println(bean);
+        MyClassPathXmlApplicationContext ac = new MyClassPathXmlApplicationContext("applicationContext.xml");
+//        Customer bean = ac.getBean(Customer.class);
+//        System.out.println(bean);
 ////        ConversionService bean = ac.getBean(ConversionService.class);
 ////        Student convert = bean.convert("1_zhangsan", Student.class);
 ////        System.out.println(convert);

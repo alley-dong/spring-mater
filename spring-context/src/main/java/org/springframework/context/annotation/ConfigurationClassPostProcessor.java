@@ -66,6 +66,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 /**
+ * 相当重要的一个类
  * 此类是一个后置处理器的类，主要功能是参与BeanFactory的建造，主要功能如下
  *   1、解析加了@Configuration的配置类
  *   2、解析@ComponentScan扫描的包

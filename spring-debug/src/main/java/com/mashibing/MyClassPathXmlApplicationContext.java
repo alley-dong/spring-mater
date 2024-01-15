@@ -29,10 +29,13 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
          * super.setAllowBeanDefinitionOverriding(false);
          * super.setAllowCircularReferences(false);
          */
-//        super.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
+
+        // 在invokeBeanFactoryPostProcessors方法入参时 获取当前类
+        super.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
         super.customizeBeanFactory(beanFactory);
     }
 
+    // 这里的入参的是beanFactory，当你有了BeanFactory之后 可以对任何东西进行获取和扩展
     @Override
     protected void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) {
         System.out.println("扩展实现postProcessBeanFactory方法");

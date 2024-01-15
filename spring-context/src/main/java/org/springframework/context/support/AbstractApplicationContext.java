@@ -589,6 +589,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 			try {
 				// Allows post-processing of the bean factory in context subclasses.
+				// 这个方法跟BeanFactoryPostProcessor接口 没有任何关系  只不过是用了同样的名字。
 				// 子类覆盖方法做额外的处理，此处我们自己一般不做任何扩展工作，但是可以查看web中的代码，是有具体实现的
 				postProcessBeanFactory(beanFactory);
 
@@ -808,6 +809,10 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 * <p>Must be called before singleton instantiation. 一定要在实例化之前进行调用
 	 */
 	protected void invokeBeanFactoryPostProcessors(ConfigurableListableBeanFactory beanFactory) {
+		/**
+		 *  BeanDefinitionRegistryPostProcessor 和 BeanFactoryPostProcessor
+		 * 一个对操作BeanDefinition的， 一个是操作BeanFactory中所有对象的。 是父子关系，并且BeanFactory包含BeanDefinition
+		 */
 		// 获取到当前应用程序上下文的beanFactoryPostProcessors变量的值，并且实例化调用执行所有已经注册的beanFactoryPostProcessor
 		// 默认情况下，通过getBeanFactoryPostProcessors()来获取已经注册的BFPP，但是默认是空的，那么问题来了，如果你想扩展，怎么进行扩展工作？
 		PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(beanFactory, getBeanFactoryPostProcessors());
