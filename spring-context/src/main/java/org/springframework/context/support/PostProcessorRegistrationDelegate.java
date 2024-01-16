@@ -194,6 +194,7 @@ final class PostProcessorRegistrationDelegate {
         // Do not initialize FactoryBeans here: We need to leave all regular beans
         // uninitialized to let the bean factory post-processors apply to them!
         // 找到所有实现BeanFactoryPostProcessor接口的类
+        // BFPP不需要多次调用beanFactory.getBeanNamesForType。 详细解释见 MyBeanDefinitionRegistryPostProcessor
         String[] postProcessorNames =
                 beanFactory.getBeanNamesForType(BeanFactoryPostProcessor.class, true, false);
 

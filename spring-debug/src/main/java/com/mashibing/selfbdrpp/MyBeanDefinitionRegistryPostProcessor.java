@@ -20,6 +20,10 @@ public class MyBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegi
         registry.registerBeanDefinition("msb",builder.getBeanDefinition());
     }
 
+    /**
+     * ConfigurableListableBeanFactory 没有实现 BeanDefinitionRegistryPostProcessor的接口，或者当前方法不支持对BeanDefinition进行注册
+     * 所以说，在对实现了BFPP的接口进行处理的时候  就不需要考虑是否有新增的BFPP。
+     */
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         System.out.println("执行postProcessBeanFactory---MyBeanDefinitionRegistryPostProcessor");
