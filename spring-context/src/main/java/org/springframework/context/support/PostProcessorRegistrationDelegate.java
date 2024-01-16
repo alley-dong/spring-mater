@@ -128,7 +128,7 @@ final class PostProcessorRegistrationDelegate {
             // Next, invoke the BeanDefinitionRegistryPostProcessors that implement Ordered.
             // 调用所有实现Ordered接口的BeanDefinitionRegistryPostProcessor实现类
             // 找到所有实现BeanDefinitionRegistryPostProcessor接口bean的beanName，
-            // 此处需要重复查找的原因在于上面的执行过程中可能会新增其他的BeanDefinitionRegistryPostProcessor
+            // 此处需要重复查找的原因在于上面的执行过程中可能会新增其他的BeanDefinitionRegistryPostProcessor  如 registry.registerBeanDefinition("msb",builder.getBeanDefinition());
             postProcessorNames = beanFactory.getBeanNamesForType(BeanDefinitionRegistryPostProcessor.class, true, false);
             for (String ppName : postProcessorNames) {
                 // 检测是否实现了Ordered接口，并且还未执行过

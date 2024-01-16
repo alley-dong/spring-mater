@@ -32,6 +32,8 @@ public class MyClassPathXmlApplicationContext extends ClassPathXmlApplicationCon
 
         // 在invokeBeanFactoryPostProcessors方法入参时 获取当前类
         super.addBeanFactoryPostProcessor(new MyBeanFactoryPostProcessor());
+        super.addBeanFactoryPostProcessor(new DclBean());
+
         super.customizeBeanFactory(beanFactory);
     }
 

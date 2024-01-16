@@ -16,6 +16,7 @@ public class MyBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegi
         System.out.println("执行postProcessBeanDefinitionRegistry---MyBeanDefinitionRegistryPostProcessor");
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(MySelfBeanDefinitionRegistryPostProcessor.class);
         builder.addPropertyValue("name","zhangsan");
+        // 向BeanDefinitionRegistry注册Bean实例。在beanFactory.getBeanNamesForType的地方进行获取
         registry.registerBeanDefinition("msb",builder.getBeanDefinition());
     }
 
