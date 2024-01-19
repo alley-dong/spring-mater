@@ -343,6 +343,11 @@ class ConfigurationClassParser {
 
 		// Process any @Import annotations
 		// 处理@Import注解
+		/**
+		 * 这里去类上面查找@Import注解，并将其加载。
+		 * 所以Springboot自动装配中的@EnableAutoConfiguration注解就是在这里获取到@Import(AutoConfigurationImportSelector.class)。
+		 * 当这里识别到了之后在下面 @12128
+		 */
 		processImports(configClass, sourceClass, getImports(sourceClass), filter, true);
 
 		// Process any @ImportResource annotations
@@ -639,6 +644,10 @@ class ConfigurationClassParser {
 						// 候选类是一个导入选择器->委托来确定是否进行导入
 						Class<?> candidateClass = candidate.loadClass();
 						// 通过反射生成一个ImportSelect对象
+						/**
+						 * @12128
+						 * 只有执行了到了这一步，才能通过AutoConfigurationImportSelector 调用getCandidateConfigurations方法找到@EnableAutoConfiguration注解 实现自动装配
+						 */
 						ImportSelector selector = ParserStrategyUtils.instantiateClass(candidateClass, ImportSelector.class,
 								this.environment, this.resourceLoader, this.registry);
 						// 获取选择器的额外过滤器
