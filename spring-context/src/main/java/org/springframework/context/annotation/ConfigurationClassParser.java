@@ -235,13 +235,14 @@ class ConfigurationClassParser {
 
 
 	protected void  processConfigurationClass(ConfigurationClass configClass, Predicate<String> filter) throws IOException {
-		// 判断是否跳过解析
+		// 基于@Conditional标签判断该对象是否要跳过
 		if (this.conditionEvaluator.shouldSkip(configClass.getMetadata(), ConfigurationPhase.PARSE_CONFIGURATION)) {
 			return;
 		}
 
 		// 第一次进入的时候，configurationClass的size为0，existingClass肯定为null，在此处处理configuration重复import
 		// 如果同一个配置类被处理两次，两次都属于被import的则合并导入类，返回，如果配置类不是被导入的，则移除旧的使用新的配置类
+		// 比如已经接解析过@Person了。又有一个类@Import(@Person) 那么则会合并。
 		ConfigurationClass existingClass = this.configurationClasses.get(configClass);
 		if (existingClass != null) {
 			if (configClass.isImported()) {
@@ -311,22 +312,30 @@ class ConfigurationClassParser {
 		}
 
 		// Process any @ComponentScan annotations
-		// 处理@ComponentScan或者@ComponentScans注解，并将扫描包下的所有bean转换成填充后的ConfigurationClass
-		// 此处就是将自定义的bean加载到IOC容器，因为扫描到的类可能也添加了@ComponentScan和@ComponentScans注解，因此需要进行递归解析
+		/**
+		 * 处理@ComponentScan或者@ComponentScans注解，并将扫描包下的所有bean转换成填充后的ConfigurationClass
+		 * 此处就是将自定义的bean加载到IOC容器，！！因为扫描到的类可能也添加了@ComponentScan和@ComponentScans注解，因此需要进行递归解析
+		 *
+		 * 例：在配置文件配置扫描com.mashibing.config包。被扫描的ComponentScan中同样包含@ComponentScan("com.mashibing.selftag")
+		 */
 		Set<AnnotationAttributes> componentScans = AnnotationConfigUtils.attributesForRepeatable(
 				sourceClass.getMetadata(), ComponentScans.class, ComponentScan.class);
 		if (!componentScans.isEmpty() &&
 				!this.conditionEvaluator.shouldSkip(sourceClass.getMetadata(), ConfigurationPhase.REGISTER_BEAN)) {
 			for (AnnotationAttributes componentScan : componentScans) {
 				// The config class is annotated with @ComponentScan -> perform the scan immediately
-				// 解析@ComponentScan和@ComponentScans配置的扫描的包所包含的类
-				// 比如 basePackages = com.mashibing, 那么在这一步会扫描出这个包及子包下的class，然后将其解析成BeanDefinition
-				// (BeanDefinition可以理解为等价于BeanDefinitionHolder)
+				/**
+				 * 解析@ComponentScan和@ComponentScans配置的扫描的包所包含的类
+				 * 比如 basePackages = com.mashibing, 那么在这一步会扫描出这个包及子包下的class，
+				 * 然后将其解析成BeanDefinition (BeanDefinition可以理解为等价于BeanDefinitionHolder)
+				 */
 				Set<BeanDefinitionHolder> scannedBeanDefinitions =
 						this.componentScanParser.parse(componentScan, sourceClass.getMetadata().getClassName());
 				// Check the set of scanned definitions for any further config classes and parse recursively if needed
-				// 通过上一步扫描包com.mashibing，有可能扫描出来的bean中可能也添加了ComponentScan或者ComponentScans注解.
-				//所以这里需要循环遍历一次，进行递归(parse)，继续解析，直到解析出的类上没有ComponentScan和ComponentScans
+				/**
+				 * 通过上一步扫描包com.mashibing，有可能扫描出来的bean中可能也添加了ComponentScan或者ComponentScans注解.
+				 * 所以这里需要循环遍历一次，进行递归(parse)，继续解析，直到解析出的类上没有ComponentScan和ComponentScans
+				 */
 				for (BeanDefinitionHolder holder : scannedBeanDefinitions) {
 					BeanDefinition bdCand = holder.getBeanDefinition().getOriginatingBeanDefinition();
 					if (bdCand == null) {
