@@ -421,6 +421,7 @@ class ConfigurationClassParser {
 					this.importStack.push(configClass);
 					try {
 						// 调用processConfigurationClass方法，因为内部类中还可能包含内部类，所以需要在做循环解析，实际工作中是不会有这中情况的
+						// 在当前方法中递归IDEA是有标记的，但是跨方法是没油标记的。
 						processConfigurationClass(candidate.asConfigClass(configClass), filter);
 					}
 					finally {
@@ -665,7 +666,7 @@ class ConfigurationClassParser {
 							// 获取引入的类，然后使用递归方式将这些类中同样添加了@Import注解引用的类
 							String[] importClassNames = selector.selectImports(currentSourceClass.getMetadata());
 							Collection<SourceClass> importSourceClasses = asSourceClasses(importClassNames, exclusionFilter);
-							// 递归处理，被Import进来的类也有可能@Import注解
+							// 递归处理，被Import进来的类也有可能@Import注解 （也就是说注解里也有可能包含其他注解）
 							processImports(configClass, currentSourceClass, importSourceClasses, exclusionFilter, false);
 						}
 					}
