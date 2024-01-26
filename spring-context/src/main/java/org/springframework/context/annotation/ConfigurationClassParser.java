@@ -665,8 +665,10 @@ class ConfigurationClassParser {
 						if (selectorFilter != null) {
 							exclusionFilter = exclusionFilter.or(selectorFilter);
 						}
-						// 判断引用选择器是否是DeferredImportSelector接口的实例
-						// 如果是则应用选择器将会在所有的配置类都加载完毕后加载
+						/**
+						 * 判断引用选择器是否是DeferredImportSelector接口的实例,如果是则应用选择器将会在所有的配置类都加载完毕后加载
+						 * 在Springboot中AutoConfigurationImportSelector是DeferredImportSelector的子类。所以延迟加载
+						 */
 						if (selector instanceof DeferredImportSelector) {
 							// 将选择器添加到deferredImportSelectorHandler实例中，预留到所有的配置类加载完成后统一处理自动化配置类
 							this.deferredImportSelectorHandler.handle(configClass, (DeferredImportSelector) selector);
