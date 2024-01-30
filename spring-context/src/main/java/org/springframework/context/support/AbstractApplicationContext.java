@@ -598,6 +598,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
+				// invoke是执行的意思，执行的是BFPP。register是注册，对BPP进行注册。
 				// 注册bean处理器，这里只是注册功能，真正调用的是getBean方法
 				registerBeanPostProcessors(beanFactory);
 
