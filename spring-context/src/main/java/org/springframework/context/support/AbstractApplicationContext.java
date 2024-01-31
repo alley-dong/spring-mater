@@ -607,7 +607,9 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				initMessageSource();
 
 				// Initialize event multicaster for this context.
-				// 初始化事件监听多路广播器
+				/*
+				 * 初始化事件监听多路广播器
+				 */
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
@@ -897,7 +899,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			}
 		}
 		else {
-			// 如果没有，则默认采用SimpleApplicationEventMulticaster
+			/*
+			 * 如果没有，则默认采用SimpleApplicationEventMulticaster
+			 * 初始化多播器,多播器对象中应该有存放监听器的集合。如果当前类中没有这个集合 就去父类找，如果父类也没有明显的集合，根据名字或者内部类去找。ListenerRetriever
+			 *
+			 * applicationEventMulticaster对象在registerListeners方法中有用到。
+			 */
 			this.applicationEventMulticaster = new SimpleApplicationEventMulticaster(beanFactory);
 			beanFactory.registerSingleton(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, this.applicationEventMulticaster);
 			if (logger.isTraceEnabled()) {

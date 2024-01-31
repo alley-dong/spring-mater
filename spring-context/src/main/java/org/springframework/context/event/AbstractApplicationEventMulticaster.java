@@ -66,7 +66,9 @@ import org.springframework.util.ObjectUtils;
 public abstract class AbstractApplicationEventMulticaster
 		implements ApplicationEventMulticaster, BeanClassLoaderAware, BeanFactoryAware {
 
-	// 创建监听器助手类，用于存放应用程序的监听器集合，参数是否是预过滤监听器为false
+	/**
+	 * 创建监听器助手类，用于存放应用程序的监听器集合，参数是否是预过滤监听器为false
+	 */
 	private final ListenerRetriever defaultRetriever = new ListenerRetriever(false);
 
 	// ListenerCacheKey是基于事件类型和源类型的类作为key用来存储监听器助手defaultRetriever
