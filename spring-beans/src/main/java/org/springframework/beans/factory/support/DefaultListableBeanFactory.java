@@ -960,6 +960,9 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		// Trigger initialization of all non-lazy singleton beans...
 		// 触发所有非延迟加载单例bean的初始化，遍历集合的对象
 		for (String beanName : beanNames) {
+			/**
+			 * mergedBeanDefinitions的缓存在beanFactory.getBeanNamesForType的时候进行初始化了。
+			 */
 			// 合并父类BeanDefinition
  			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
 			// 条件判断，抽象，单例，非懒加载

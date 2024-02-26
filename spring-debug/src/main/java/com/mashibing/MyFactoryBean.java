@@ -18,6 +18,6 @@ public class MyFactoryBean implements FactoryBean<User> {
 
     @Override
     public boolean isSingleton() {
-        return false;
+        return true;
     }
 }

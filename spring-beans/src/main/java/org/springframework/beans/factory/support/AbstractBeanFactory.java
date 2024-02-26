@@ -410,6 +410,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 				// Create bean instance.
 				// 创建bean的实例对象
 				if (mbd.isSingleton()) {
+					/**
+					 * ObjectFactory是一个函数式接口，当调用接口其中的getObject方法的时候 才会执行 匿名内部类的逻辑。
+					 */
 					// 返回以beanName的(原始)单例对象，如果尚未注册，则使用singletonFactory创建并注册一个对象:
 					sharedInstance = getSingleton(beanName, () -> {
 						try {
@@ -1770,6 +1773,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 		// 从bean名称映射到合并的RootBeanDefinition的集合中获取beanName对应的RootBeanDefinition
 		RootBeanDefinition mbd = this.mergedBeanDefinitions.get(beanName);
 		// 如果mbd不为null 且 不需要重新合并定义
+		/**
+		 * 通过一个状态位 判断是否是新鲜的值
+		 */
 		if (mbd != null && !mbd.stale) {
 			// 返回对应的RootBeanDefinition
 			return mbd;
@@ -2055,6 +2061,9 @@ public abstract class AbstractBeanFactory extends FactoryBeanRegistrySupport imp
 			}
 			else {
 				// 进行详细的处理解析过程
+				/**
+				 * 将Bean类名解析成class对象,并将解析后的Class对象缓存在mdb中以备将来使用
+				 */
 				return doResolveBeanClass(mbd, typesToMatch);
 			}
 		}

@@ -1003,7 +1003,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	 */
 	protected void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
 		// Initialize conversion service for this context.
-		// 为上下文初始化类型转换器
+		/**
+		 * 为上下文初始化类型转换器
+		 * ConversionService的默认实现类中 有三个重要方法。
+		 * 每个方法中有不同的转换器，同一个方法的转换器实现自不同的转换器接口，接口分别是 1对1转换（S->T）、1对N转换(S-> A、B、C、D等)、N对N转换（S的上下限）
+		 */
 		if (beanFactory.containsBean(CONVERSION_SERVICE_BEAN_NAME) &&
 				beanFactory.isTypeMatch(CONVERSION_SERVICE_BEAN_NAME, ConversionService.class)) {
 			beanFactory.setConversionService(

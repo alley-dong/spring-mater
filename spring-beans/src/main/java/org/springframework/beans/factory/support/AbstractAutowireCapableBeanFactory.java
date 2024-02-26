@@ -592,7 +592,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// Make sure bean class is actually resolved at this point, and
 		// clone the bean definition in case of a dynamically resolved Class
 		// which cannot be stored in the shared merged bean definition.
-		// 锁定class，根据设置的class属性或者根据className来解析class
+		// 锁定class，根据设置的class属性或者根据className来解析class （Class.forName）
 		Class<?> resolvedClass = resolveBeanClass(mbd, beanName);
 		// 进行条件筛选，重新赋值RootBeanDefinition,并设置BeanClass属性
 		if (resolvedClass != null && !mbd.hasBeanClass() && mbd.getBeanClassName() != null) {
