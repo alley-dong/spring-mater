@@ -1428,6 +1428,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 					"Bean class isn't public, and non-public access not allowed: " + beanClass.getName());
 		}
 
+		/**
+		 * supplier创建Bean
+		 */
 		// 判断当前beanDefinition中是否包含实例供应器，此处相当于一个回调方法，利用回调方法来创建bean
 		Supplier<?> instanceSupplier = mbd.getInstanceSupplier();
 		if (instanceSupplier != null) {
@@ -1435,6 +1438,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		// 如果工厂方法不为空则使用工厂方法初始化策略
+		/**
+		 * FactoryMethod创建Bean
+		 * 该方法很长，去Spring中找一下 这个图 有过程，但是不怎么重要  09instantiateUsingFactoryMethod大致流程.jpg
+		 */
 		if (mbd.getFactoryMethodName() != null) {
 			return instantiateUsingFactoryMethod(beanName, mbd, args);
 		}
