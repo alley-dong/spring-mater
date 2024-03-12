@@ -692,6 +692,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			if (!mbd.postProcessed) {
 				try {
 					// MergedBeanDefinitionPostProcessor后置处理器修改合并bean的定义
+					/**
+					 * 在前面对BeanDefinition进行冻结，这里对其进行修改是因为Bean已经实例化了，这里对BeanDefinition进行填充。
+					 */
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}
 				catch (Throwable ex) {
@@ -1339,6 +1342,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		for (BeanPostProcessor bp : getBeanPostProcessors()) {
 			if (bp instanceof MergedBeanDefinitionPostProcessor) {
 				MergedBeanDefinitionPostProcessor bdp = (MergedBeanDefinitionPostProcessor) bp;
+				/**
+				 * 处理@PostConstruct和@PreDestroy注解，调用方法获取生命周期元数据并保存
+				 * 此时就完成了相关方法（初始化方法和销毁方法）的扫描解析和缓存工作
+				 */
 				bdp.postProcessMergedBeanDefinition(mbd, beanType, beanName);
 			}
 		}
@@ -1482,6 +1489,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			}
 		}
 
+		/**
+		 * 此处获取构造器上的Autowired注解，只是对构造器进行筛选  在实例化的时候用不到ctors
+		 * 一般用不上因为 没见过在构造器上用 自动装配的注解~
+		 */
 		// Candidate constructors for autowiring?
 		// 从bean后置处理器中为自动装配寻找构造方法, 有且仅有一个有参构造或者有且仅有@Autowired注解构造
 		Constructor<?>[] ctors = determineConstructorsFromBeanPostProcessors(beanClass, beanName);
@@ -1614,7 +1625,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 						getAccessControlContext());
 			}
 			else {
-				// 获取实例化策略并且进行实例化操作
+				/**
+				 * 获取实例化策略并且进行实例化操作
+				 */
 				beanInstance = getInstantiationStrategy().instantiate(mbd, beanName, this);
 			}
 			// 包装成BeanWrapper

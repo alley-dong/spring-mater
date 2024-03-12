@@ -149,7 +149,9 @@ public class InitDestroyAnnotationBeanPostProcessor
 
 	@Override
 	public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class<?> beanType, String beanName) {
-		// 调用方法获取生命周期元数据并保存
+		/**
+		 * 调用方法获取生命周期元数据并保存
+		 */
 		LifecycleMetadata metadata = findLifecycleMetadata(beanType);
 		// 验证相关方法
 		metadata.checkConfigMembers(beanDefinition);
@@ -223,7 +225,9 @@ public class InitDestroyAnnotationBeanPostProcessor
 				// 加锁后再次尝试获取元数据，防止多线程重复执行
 				metadata = this.lifecycleMetadataCache.get(clazz);
 				if (metadata == null) {
-					// 构建生命周期元数据
+					/**
+					 * 构建生命周期元数据
+					 */
 					metadata = buildLifecycleMetadata(clazz);
 					// 将构建好的元数据放入缓存中
 					this.lifecycleMetadataCache.put(clazz, metadata);
