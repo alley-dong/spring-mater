@@ -672,7 +672,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// 没有就创建实例
 		if (instanceWrapper == null) {
 			/**
-			 * 工厂方法，构造函数主动注入、简单初始化
+			 * 实例化。  根据执行bean使用对应的策略创建新的实例，如，工厂方法，构造函数主动注入、简单初始化
 			 */
 			// 根据执行bean使用对应的策略创建新的实例，如，工厂方法，构造函数主动注入、简单初始化
 			instanceWrapper = createBeanInstance(beanName, mbd, args);
@@ -694,6 +694,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 					// MergedBeanDefinitionPostProcessor后置处理器修改合并bean的定义
 					/**
 					 * 在前面对BeanDefinition进行冻结，这里对其进行修改是因为Bean已经实例化了，这里对BeanDefinition进行填充。
+					 *
+					 * 为什么Bean已经实例化完成了  要是对BeanDefinition要进行填充修改？
+					 * 因为不可能说一个Spring项目 注解和XML可以混合使用， 所以要把注解的解析工作放在这里，不然后面不知道你哪些BeanDefinition被注解处理了。
 					 */
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}
@@ -1345,6 +1348,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				/**
 				 * 处理@PostConstruct和@PreDestroy注解，调用方法获取生命周期元数据并保存
 				 * 此时就完成了相关方法（初始化方法和销毁方法）的扫描解析和缓存工作
+				 *
+				 * 并且MergedBeanDefinitionPostProcessor这个接口 的实现类是用来进行一些相关的注解(@Resource、@Value、@Autowired等)的解析和处理。
 				 */
 				bdp.postProcessMergedBeanDefinition(mbd, beanType, beanName);
 			}
