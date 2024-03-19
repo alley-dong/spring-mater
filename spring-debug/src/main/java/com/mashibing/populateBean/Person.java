@@ -1,5 +1,7 @@
 package com.mashibing.populateBean;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.*;
@@ -9,6 +11,7 @@ public class Person {
     private String name;
     private int age;
     private String gender;
+    @Autowired
     private Address address;
     private String[] hobbies;
     private List<Book> books;

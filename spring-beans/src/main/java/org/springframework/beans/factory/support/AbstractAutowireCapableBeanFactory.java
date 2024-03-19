@@ -1769,7 +1769,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		//经过筛选的PropertyDesciptor数组,存放着排除忽略的依赖项或忽略项上的定义的属性
 		PropertyDescriptor[] filteredPds = null;
-		//如果工厂拥有InstiationAwareBeanPostProcessor,那么处理对应的流程，主要是对几个注解的赋值工作包含的两个关键子类是CommonAnnoationBeanPostProcessor,AutowiredAnnotationBeanPostProcessor
+		//如果工厂拥有InstiationAwareBeanPostProcessor,那么处理对应的流程，主要是对几个注解的赋值工作包含的两个关键子类是CommonAnnotationBeanPostProcessor,AutowiredAnnotationBeanPostProcessor
 		if (hasInstAwareBpps) {
 			//如果pvs为null
 			if (pvs == null) {
@@ -1785,6 +1785,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 					//postProcessProperties:在工厂将给定的属性值应用到给定Bean之前，对它们进行后处理，不需要任何属性扫描符。该回调方法在未来的版本会被删掉。
 					// -- 取而代之的是 postProcessPropertyValues 回调方法。
 					// 让ibp对pvs增加对bw的Bean对象的propertyValue，或编辑pvs的proertyValue
+					/**
+					 * 完成bean中@Autowired，@Inject，@Value注解的解析并注入的功能
+					 */
 					PropertyValues pvsToUse = ibp.postProcessProperties(pvs, bw.getWrappedInstance(), beanName);
 					//如果pvs为null
 					if (pvsToUse == null) {

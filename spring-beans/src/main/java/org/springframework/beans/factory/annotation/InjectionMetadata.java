@@ -140,6 +140,10 @@ public class InjectionMetadata {
 				if (logger.isTraceEnabled()) {
 					logger.trace("Processing injected element of bean '" + beanName + "': " + element);
 				}
+				/**
+				 * AutowiredFieldElement、AutowiredMethodElement 是AutowiredAnnotationBeanPostProcessor下的内部类。
+				 * 会对inject方法进行重写。
+				 */
 				element.inject(target, beanName, pvs);
 			}
 		}

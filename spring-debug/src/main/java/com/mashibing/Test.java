@@ -20,7 +20,7 @@ public class Test {
 //        User bean2 = (User) ac.getBean("myFactoryBean");
 //        System.out.println(bean2.getUsername());
 //
-////        MyClassPathXmlApplicationContext ac = new MyClassPathXmlApplicationContext("applicationContext.xml");
+//        MyClassPathXmlApplicationContext ac = new MyClassPathXmlApplicationContext("applicationContext.xml");
 ////        System.out.println(ac.getBean(MyPropertySource.class).getName());
 ////        ApplicationContext ac = new ClassPathXmlApplicationContext("spring-${username}.xml");
 ////        Person bean = ac.getBean(Person.class);
@@ -45,9 +45,10 @@ public class Test {
 ////        ac.close();
 ////        Person person2 = ac.getBean("person", Person.class);
 //
-        ApplicationContext ac = new ClassPathXmlApplicationContext("person.xml");
-        Person bean = ac.getBean(Person.class);
-        Person bean2 = ac.getBean(Person.class);
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("populateBean.xml");
+        ac.close();
+//        Person bean = ac.getBean(Person.class);
+//        Person bean2 = ac.getBean(Person.class);
 //
 ////        System.out.println(System.getProperties());
 ////        System.out.println(System.getenv());
