@@ -45,8 +45,10 @@ public class Test {
 ////        ac.close();
 ////        Person person2 = ac.getBean("person", Person.class);
 //
-        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("populateBean.xml");
+        ClassPathXmlApplicationContext  ac = new ClassPathXmlApplicationContext("cycle.xml");
         ac.close();
+//        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("cycle.xml");
+//        ac.close();
 //        Person bean = ac.getBean(Person.class);
 //        Person bean2 = ac.getBean(Person.class);
 //

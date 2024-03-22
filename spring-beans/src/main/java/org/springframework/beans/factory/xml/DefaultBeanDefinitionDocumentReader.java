@@ -178,7 +178,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 					if (delegate.isDefaultNamespace(ele)) {
 						parseDefaultElement(ele, delegate);
 					}
-					// 解析自定义的命名空间（context:component-scan: null）
+					// 解析自定义的命名空间、context:component-scan、AOP
 					else {
 						delegate.parseCustomElement(ele);
 					}
