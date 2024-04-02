@@ -40,6 +40,9 @@ public class SimpleBeanFactoryAwareAspectInstanceFactory implements AspectInstan
 	@Nullable
 	private String aspectBeanName;
 
+	/**
+	 * 实现BeanFactoryAware接口 能获取到 BeanFactory
+	 */
 	@Nullable
 	private BeanFactory beanFactory;
 
